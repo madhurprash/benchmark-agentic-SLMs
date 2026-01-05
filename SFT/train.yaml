@@ -4,7 +4,7 @@
 model:
   name: "unsloth/Nemotron-3-Nano-30B-A3B"
   max_seq_length: 2048  # Reduced to 1024 for memory efficiency
-  load_in_4bit: False  # Enable 4-bit quantization to reduce memory usage
+  load_in_4bit: True  # Enable 4-bit quantization to reduce memory usage
   load_in_8bit: False
   full_finetuning: False  # Disable full fine-tuning, use LoRA instead
   trust_remote_code: True
@@ -44,8 +44,8 @@ dataset:
 # Training arguments
 training:
   output_dir: "./outputs/nemotron-sft"
-  per_device_train_batch_size: 2  # Increased to 2 with LoRA and 4-bit quantization
-  gradient_accumulation_steps: 8  # Reduced since batch size is higher (effective batch = 2*8 = 16)
+  per_device_train_batch_size: 1  # Reduced to 1 for memory safety
+  gradient_accumulation_steps: 16  # Increased to maintain effective batch size = 16
   warmup_steps: 5
   max_steps: 60
   num_train_epochs: 1  # Will be ignored if max_steps is set
